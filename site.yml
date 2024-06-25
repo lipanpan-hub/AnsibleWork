@@ -1,0 +1,5 @@
+---
+- name: Example playbook
+  hosts: localhost
+  roles:
+    - role: lipanpan_hub.work.run
