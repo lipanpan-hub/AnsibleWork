@@ -1,12 +1,14 @@
 ---
 # Variable configuration.
-- name: Include OS-specific variables.
+- name: 根据系统的 家族和版本号 加载系统特定 变量 
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
         - "vars/{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
         - "vars/{{ ansible_os_family }}.yml"
       skip: true
+
+# 变量加载完成之后就是开始使用变量了 把变量的值设置到  ansible_facts 中去
 
 - name: Define mysql_packages.
   ansible.builtin.set_fact:

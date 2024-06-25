@@ -1,5 +1,5 @@
 ---
-- name: Ensure MySQL users are present.
+- name: 确保设置的mysql 用户都已经存在了
   mysql_user:
     name: "{{ item.name }}"
     host: "{{ item.host | default('localhost') }}"

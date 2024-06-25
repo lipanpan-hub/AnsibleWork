@@ -1,24 +1,22 @@
 ---
-# Variable configuration.
+# 加载变量
 - ansible.builtin.include_tasks: variables.yml
 
-# Setup/install tasks.
+# 根据不同的系统家族 执行不同的设置脚本
 - ansible.builtin.include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
-
 - ansible.builtin.include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
-
 - ansible.builtin.include_tasks: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
-- name: Check if MySQL packages were installed.
+- name: 最后再检查一下 mysql的 安装是否完成  
   ansible.builtin.set_fact:
     mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed)
       or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed)
       or (arch_mysql_install_packages is defined and arch_mysql_install_packages.changed) }}"
 
-# Configure MySQL.
+# mysql 安装完成之后 就开始 配置 mysql了 
 - ansible.builtin.include_tasks: configure.yml
 - ansible.builtin.include_tasks: secure-installation.yml
 - ansible.builtin.include_tasks: databases.yml

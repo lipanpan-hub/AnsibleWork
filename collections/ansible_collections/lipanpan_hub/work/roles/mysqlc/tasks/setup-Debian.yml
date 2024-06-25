@@ -1,21 +1,21 @@
 ---
-- name: Check if MySQL is already installed.
+- name: 检查 mysql 是否已经安装好了 返回的状态 保留下来
   ansible.builtin.stat:
     path: "{{ mysql_config_file }}"
   register: mysql_installed
 
-- name: Update apt cache if MySQL is not yet installed.
+- name: 如果没有安装好 则更新下 apt cache 
   ansible.builtin.apt:
     update_cache: yes
   changed_when: False
   when: not mysql_installed.stat.exists
 
-- name: Ensure MySQL Python libraries are installed.
+- name: 确保 mysql相关的 python库已经安装好了
   ansible.builtin.apt:
     name: "{{ mysql_python_package_debian }}"
     state: present
 
-- name: Ensure MySQL packages are installed.
+- name: 确保 mysql 已经 安装 好了 
   ansible.builtin.apt:
     name: "{{ mysql_packages }}"
     state: present

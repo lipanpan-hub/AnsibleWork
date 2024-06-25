@@ -1,5 +1,5 @@
 ---
-- name: Ensure MySQL databases are present.
+- name: 确保 设置的数据库 都已经存在了 
   mysql_db:
     name: "{{ item.name }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"

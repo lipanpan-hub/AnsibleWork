@@ -1,11 +1,11 @@
 ---
-- name: Get MySQL version.
+- name: 获取当前安装mysql的版本 
   ansible.builtin.command: 'mysql --version'
   register: mysql_cli_version
   changed_when: false
   check_mode: false
 
-- name: Copy my.cnf global MySQL configuration.
+- name: 把mysql模板配置文件发送到 目标主机上的特定地址 
   ansible.builtin.template:
     src: my.cnf.j2
     dest: "{{ mysql_config_file }}"
@@ -80,7 +80,7 @@
     - mysql_log_error | default(false)
   tags: ['skip_ansible_galaxy']
 
-- name: Ensure MySQL is started and enabled on boot.
+- name: 确保 mysql 服务已经启动了 并且开机自启动  
   ansible.builtin.service:
     name: "{{ mysql_daemon }}"
     state: started

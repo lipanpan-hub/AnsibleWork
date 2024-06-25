@@ -1,5 +1,5 @@
 ---
-- name: Ensure replication user exists on master.
+- name: 确保 replication 用户已经再 master存在了 
   mysql_user:
     name: "{{ mysql_replication_user.name }}"
     host: "{{ mysql_replication_user.host | default('%') }}"
@@ -38,7 +38,7 @@
     - (mysql_replication_master | length) > 0
   tags: ['skip_ansible_galaxy']
 
-- name: Configure replication on the slave.
+- name: 在从节点 上配置 replication  
   mysql_replication:
     mode: changeprimary
     master_host: "{{ mysql_replication_master }}"
