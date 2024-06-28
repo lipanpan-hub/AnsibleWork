@@ -7,7 +7,7 @@
   changed_when: false
   check_mode: false
 
-- name: 把mysql模板配置文件发送到 目标主机上的特定地址 
+- name: 把配置文件模板发送到 设置的配置文件地址
   ansible.builtin.template:
     src: my.cnf.j2
     dest: "{{ mysql_config_file }}"
@@ -17,7 +17,7 @@
     force: "{{ overwrite_global_mycnf }}"
   notify: restart mysql
 
-- name: Verify mysql include directory exists.
+- name: 校验include文件夹是否存在
   ansible.builtin.file:
     path: "{{ mysql_config_include_dir }}"
     state: directory
@@ -26,7 +26,7 @@
     mode: 0755
   when: mysql_config_include_files | length
 
-- name: Copy my.cnf override files into include directory.
+- name: 把 my.cnf 复制到 include文件夹当中去 
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ mysql_config_include_dir }}/{{ item.src | basename }}"
@@ -37,13 +37,13 @@
   with_items: "{{ mysql_config_include_files }}"
   notify: restart mysql
 
-- name: Create slow query log file (if configured).
+- name: 创建慢查询日志文件 (if configured).
   ansible.builtin.command: "touch {{ mysql_slow_query_log_file }}"
   args:
     creates: "{{ mysql_slow_query_log_file }}"
   when: mysql_slow_query_log_enabled
 
-- name: Create datadir if it does not exist
+- name: 创建数据文件夹
   ansible.builtin.file:
     path: "{{ mysql_datadir }}"
     state: directory
@@ -52,7 +52,7 @@
     mode: 0755
     setype: mysqld_db_t
 
-- name: Set ownership on slow query log file (if configured).
+- name: 设置慢查询日志文件的权限 (if configured).
   ansible.builtin.file:
     path: "{{ mysql_slow_query_log_file }}"
     state: file
@@ -61,7 +61,7 @@
     mode: 0640
   when: mysql_slow_query_log_enabled
 
-- name: Create error log file (if configured).
+- name: 创建错误日志文件 (if configured).
   ansible.builtin.command: "touch {{ mysql_log_error }}"
   args:
     creates: "{{ mysql_log_error }}"
@@ -70,7 +70,7 @@
     - mysql_log_error | default(false)
   tags: ['skip_ansible_galaxy']
 
-- name: Set ownership on error log file (if configured).
+- name: 设置错误日志文件的权限 (if configured).
   ansible.builtin.file:
     path: "{{ mysql_log_error }}"
     state: file
@@ -82,7 +82,7 @@
     - mysql_log_error | default(false)
   tags: ['skip_ansible_galaxy']
 
-- name: 确保 mysql 服务已经启动了 并且开机自启动  
+- name: 启动mysql 并设置开机自启 返回结果注册到变量
   ansible.builtin.service:
     name: "{{ mysql_daemon }}"
     state: started

@@ -1,5 +1,5 @@
 ---
-# debian系统的操作步骤
+# debian系统的操作步骤 ubuntu系统也使用这个setup
 
 - name: 检查 mysql 是否已经安装好了 返回的状态 保留下来
   ansible.builtin.stat:
@@ -17,28 +17,30 @@
     name: "{{ mysql_python_package_debian }}"
     state: present
 
-- name: 安装指定的 
+- name: 安装指定的 mysql包  并把结果注册到一个变量
   ansible.builtin.apt:
     name: "{{ mysql_packages }}"
     state: present
     policy_rc_d: 101
   register: deb_mysql_install_packages
 
+
+
 # Because Ubuntu starts MySQL as part of the install process, we need to stop
 # mysql and remove the logfiles in case the user set a custom log file size.
-- name: Ensure MySQL is stopped after initial install.
-  ansible.builtin.service:
-    name: "{{ mysql_daemon }}"
-    state: stopped
-  when: not mysql_installed.stat.exists
+# - name: Ensure MySQL is stopped after initial install.
+#   ansible.builtin.service:
+#     name: "{{ mysql_daemon }}"
+#     state: stopped
+#   when: not mysql_installed.stat.exists
 
-- name: Delete innodb log files created by apt package after initial install.
-  ansible.builtin.file:
-    path: "{{ mysql_datadir }}/{{ item }}"
-    state: absent
-  with_items:
-    - ib_logfile0
-    - ib_logfile1
-  when: >
-    not mysql_installed.stat.exists
-    and ansible_distribution_major_version | int < 12
+# - name: Delete innodb log files created by apt package after initial install.
+#   ansible.builtin.file:
+#     path: "{{ mysql_datadir }}/{{ item }}"
+#     state: absent
+#   with_items:
+#     - ib_logfile0
+#     - ib_logfile1
+#   when: >
+#     not mysql_installed.stat.exists
+#     and ansible_distribution_major_version | int < 12

@@ -18,7 +18,7 @@ skip-name-resolve
 sql_mode = {{ mysql_sql_mode }}
 {% endif %}
 
-# Logging configuration.
+# 日志文件配置
 {% if mysql_log_error == 'syslog' or mysql_log == 'syslog' %}
 syslog
 syslog-tag = {{ mysql_syslog_tag }}
@@ -29,8 +29,10 @@ log = {{ mysql_log }}
 log-error = {{ mysql_log_error }}
 {% endif %}
 
+
+
 {% if mysql_slow_query_log_enabled %}
-# Slow query log configuration.
+# 慢查询日志文件配置
 slow_query_log = 1
 slow_query_log_file = {{ mysql_slow_query_log_file }}
 long_query_time = {{ mysql_slow_query_time }}
@@ -38,12 +40,14 @@ long_query_time = {{ mysql_slow_query_time }}
 
 
 {% if mysql_disable_log_bin and not mysql_replication_master %}
-# Disable binlog to save disk space
+# 关闭 binlog 节省磁盘空间 
 disable-log-bin
 {% endif %}
 
+
+
 {% if mysql_replication_master %}
-# Replication
+# 主从复制配置
 server-id = {{ mysql_server_id }}
 
 {% if mysql_replication_role == 'master' %}
@@ -78,7 +82,7 @@ user = mysql
 # http://dev.mysql.com/doc/refman/5.5/en/performance-schema.html
 ;performance_schema
 
-# Memory settings.
+# 内存设置 
 key_buffer_size = {{ mysql_key_buffer_size }}
 max_allowed_packet = {{ mysql_max_allowed_packet }}
 table_open_cache = {{ mysql_table_open_cache }}

@@ -1,0 +1,4 @@
+- hosts: host565
+  roles:
+    role: lipanpan_hub.work.mysqlc
+
