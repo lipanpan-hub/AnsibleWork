@@ -1,0 +1,24 @@
+- name: "generate ssh keypair"
+  hosts: localhost
+  become: true
+  tasks:
+  - 
+    block: 
+      - ansible.builtin.command: "ssh-keygen -t rsa -b 4096 -q -f /home/vagrant/.ssh/xxx -N '' "
+    rescue: 
+      - ansible.builtin.debug: 
+          msg: "没有必要重新生成密钥.."
+    always:
+      - ansible.builtin.apt:
+          name: sshpass
+        
+
+- name: "push public key"
+  hosts: db_servers
+  gather_facts: false
+  tasks:
+    - ansible.posix.authorized_key:
+        user: vagrant
+        state: present
+        key: "{{ lookup('file', '/home/vagrant/.ssh/xxx.pub') }}"
+

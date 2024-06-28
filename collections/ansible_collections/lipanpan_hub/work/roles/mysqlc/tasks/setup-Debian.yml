@@ -1,4 +1,6 @@
 ---
+# debian系统的操作步骤
+
 - name: 检查 mysql 是否已经安装好了 返回的状态 保留下来
   ansible.builtin.stat:
     path: "{{ mysql_config_file }}"
@@ -10,12 +12,12 @@
   changed_when: False
   when: not mysql_installed.stat.exists
 
-- name: 确保 mysql相关的 python库已经安装好了
+- name: 安装 mysql 相关的 python包
   ansible.builtin.apt:
     name: "{{ mysql_python_package_debian }}"
     state: present
 
-- name: 确保 mysql 已经 安装 好了 
+- name: 安装指定的 
   ansible.builtin.apt:
     name: "{{ mysql_packages }}"
     state: present

@@ -1,5 +1,5 @@
 ---
-- name: Ensure default user is present.
+- name: 确保默认用户已经存在了 
   mysql_user:
     name: "{{ mysql_user_name }}"
     host: 'localhost'

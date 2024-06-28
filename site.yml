@@ -1,5 +1,7 @@
 ---
 - name: Example playbook
-  hosts: localhost
-  roles:
-    - role: lipanpan_hub.work.run
+  hosts: db_servers
+  tasks:
+    - ansible.builtin.copy:
+        content: "{{hostvars | to_nice_json}}"
+        dest: hostvars.json

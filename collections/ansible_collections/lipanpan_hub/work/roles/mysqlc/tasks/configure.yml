@@ -1,4 +1,6 @@
 ---
+# 这个文件会开始 
+
 - name: 获取当前安装mysql的版本 
   ansible.builtin.command: 'mysql --version'
   register: mysql_cli_version

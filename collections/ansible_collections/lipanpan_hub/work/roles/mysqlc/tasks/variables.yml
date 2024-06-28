@@ -8,7 +8,11 @@
         - "vars/{{ ansible_os_family }}.yml"
       skip: true
 
+# 根据 os family 加载变量 减少不必要的变量加载
+
 # 变量加载完成之后就是开始使用变量了 把变量的值设置到  ansible_facts 中去
+# 这些变量都是从 var文件夹下面读取的 这些变量的值一般情况下是固定不变的  
+
 
 - name: Define mysql_packages.
   ansible.builtin.set_fact:
