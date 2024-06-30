@@ -1,4 +1,6 @@
-- hosts: host565
+- hosts: localhost
+  vars_files: 
+    - vars/mysql_conf.yml 
   roles:
     role: lipanpan_hub.work.mysqlc
 

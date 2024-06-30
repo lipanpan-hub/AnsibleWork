@@ -10,16 +10,16 @@ mysql_root_home: /root
 mysql_root_username: root
 mysql_root_password: root
 
-# Set this to `true` to forcibly update the root password.
+# 默认不会强制更新root用户的密码 
 mysql_root_password_update: false
 mysql_user_password_update: false
 
 mysql_enabled_on_startup: true
 
-# Whether my.cnf should be updated on every run.
+# 模板的配置文件会覆盖默认生成的配置文件
 overwrite_global_mycnf: true
 
-# The following variables have a default value depending on operating system.
+# 默认配置文件的地址 不同的系统不一样 所以在 var变量里面已经设置好了 
 # mysql_config_file: /etc/my.cnf
 # mysql_config_include_dir: /etc/my.cnf.d
 
@@ -27,8 +27,8 @@ overwrite_global_mycnf: true
 # for RedHat systems (and derivatives).
 mysql_enablerepo: ""
 
-# Define a custom list of packages to install; if none provided, the default
-# package list from vars/[OS-family].yml will be used.
+# 设置系统需要安装哪些依赖包 不同的系统不一样 已经在role/var文件夹当中设置好了 并且会通过include_var读取到 facts中
+# 由于role当中 设置的优先级太高了 所以这里的设置是没用的 
 # mysql_packages:
 #   - mysql
 #   - mysql-server
@@ -36,23 +36,23 @@ mysql_enablerepo: ""
 
 mysql_python_package_debian: python3-mysqldb
 
-# MySQL connection settings.
+# MySQL链接设置 
 mysql_port: "3306"
 mysql_bind_address: '0.0.0.0'
 mysql_skip_name_resolve: false
 mysql_datadir: /var/lib/mysql
 mysql_sql_mode: ~
-# The following variables have a default value depending on operating system.
+# 下面这两个变量不同的操作系统设置不同 放在 role/var当中了 
 # mysql_pid_file: /var/run/mysqld/mysqld.pid
 # mysql_socket: /var/lib/mysql/mysql.sock
 
-# Log file settings.
+# 日志文件所属的组 默认是adm 已经放在 role/var当红了这里设置无效
 mysql_log_file_group: mysql
 
-# Slow query log settings.
+# 是否开启慢查询日志
 mysql_slow_query_log_enabled: false
 mysql_slow_query_time: "2"
-# The following variable has a default value depending on operating system.
+# 慢查询日志地址 不同系统放在不同位置
 # mysql_slow_query_log_file: /var/log/mysql-slow.log
 
 # Memory settings (default values optimized ~512MB RAM).
@@ -101,6 +101,7 @@ mysql_log: ""
 # mysql_log_error: /var/log/mysql/mysql.err
 # mysql_syslog_tag: mysql
 
+# 如果这里设置了内容 则需要在playbook目录当中添加配置文件
 mysql_config_include_files: []
 #  - src: path/relative/to/playbook/file.cnf
 #  - { src: path/relative/to/playbook/anotherfile.cnf, force: yes }

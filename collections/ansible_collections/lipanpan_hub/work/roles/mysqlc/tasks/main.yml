@@ -10,7 +10,7 @@
 
 
 
-- name: 通过检查变量是否被定义 查看mysql的安装情况 
+- name: 查看mysql是否成功安装 并且把结果 赋值 给变量 
   ansible.builtin.set_fact:
     mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed)
       or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed)

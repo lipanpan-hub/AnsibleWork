@@ -1,13 +1,13 @@
 ---
 # 这个文件会开始 
 
-- name: 获取当前安装mysql的版本 
+- name: 获取当前安装mysql的版本 返回结果注册到变量
   ansible.builtin.command: 'mysql --version'
   register: mysql_cli_version
   changed_when: false
   check_mode: false
 
-- name: 把配置文件模板发送到 设置的配置文件地址
+- name: 把配置文件发送到etc目录下做全局配置
   ansible.builtin.template:
     src: my.cnf.j2
     dest: "{{ mysql_config_file }}"
@@ -17,7 +17,7 @@
     force: "{{ overwrite_global_mycnf }}"
   notify: restart mysql
 
-- name: 校验include文件夹是否存在
+- name: 校验用户是否设置了 include files列表 
   ansible.builtin.file:
     path: "{{ mysql_config_include_dir }}"
     state: directory
@@ -26,7 +26,7 @@
     mode: 0755
   when: mysql_config_include_files | length
 
-- name: 把 my.cnf 复制到 include文件夹当中去 
+- name: 把用户配置的include files复制到 include dir当中去 
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ mysql_config_include_dir }}/{{ item.src | basename }}"
@@ -43,7 +43,7 @@
     creates: "{{ mysql_slow_query_log_file }}"
   when: mysql_slow_query_log_enabled
 
-- name: 创建数据文件夹
+- name: 创建存放数据文件夹
   ansible.builtin.file:
     path: "{{ mysql_datadir }}"
     state: directory
@@ -88,3 +88,5 @@
     state: started
     enabled: "{{ mysql_enabled_on_startup }}"
   register: mysql_service_configuration
+
+# 这里已经启动mysql 了还设置mysql 开机自启动了 后面 就开始执行 secure install
