@@ -1,6 +1,6 @@
 ---
 - name: 创建用户设置的mysql用户
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ mysql_user_name }}"
     host: 'localhost'
     password: "{{ mysql_user_password }}"
@@ -77,14 +77,14 @@
   check_mode: false
 
 - name: 移除匿名用户
-  mysql_user:
+  community.mysql.mysql_user:
     name: ""
     host: "{{ item }}"
     state: absent
   with_items: "{{ mysql_anonymous_hosts.stdout_lines|default([]) }}"
 
 - name: 移除test数据库  
-  mysql_db:
+  community.mysql.mysql_db:
     name: 'test'
     state: absent
 

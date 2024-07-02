@@ -1,6 +1,13 @@
-- hosts: localhost
+- name: 单机部署测试
+  hosts: host565
+  become: true 
+  environment: 
+    ANSIBLE_STDOUT_CALLBACK: debug
   vars_files: 
-    - vars/mysql_conf.yml 
-  roles:
-    role: lipanpan_hub.work.mysqlc
+    - vars/mysql_conf.yml
+  tasks:
+    - ansible.builtin.import_role:
+        name: lipanpan_hub.work.mysqlc
+
+
 

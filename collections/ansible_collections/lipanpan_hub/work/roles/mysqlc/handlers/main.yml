@@ -1,5 +1,5 @@
 ---
-- name: 重启 mysql
+- name: restart mysql
   ansible.builtin.service:
     name: "{{ mysql_daemon }}"
     state: restarted

@@ -1,0 +1,19 @@
+---
+
+mysql_root_home: /root
+mysql_root_username: root
+mysql_root_password: root1234!
+# 默认不会强制更新root用户的密码 这里设置没用
+
+mysql_port: "3306"
+mysql_bind_address: '0.0.0.0'
+
+
+
+mysql_databases: 
+  - name: lppx
+    collation: utf8mb4_unicode_ci
+    encoding: utf8mb4
+    replicate: 1
+
+
