@@ -18,3 +18,8 @@ mysql_replication_user:
 mysql_replication_master: '192.168.56.5'
 mysql_server_id: "1"
 
+mysql_databases: 
+  - name: lppx
+    collation: utf8mb4_unicode_ci
+    encoding: utf8mb4
+    replicate: 1
