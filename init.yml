@@ -13,8 +13,8 @@
           name: sshpass
         
 
-- name: "push public key"
-  hosts: db_servers
+- name: "推送公钥到目标主机"
+  hosts: all
   gather_facts: false
   tasks:
     - ansible.posix.authorized_key:
