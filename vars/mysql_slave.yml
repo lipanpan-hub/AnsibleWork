@@ -1,8 +1,0 @@
-
-mysql_replication_role: 'slave'
-mysql_replication_user: 
-  name: replicator
-  password: test1234!
-
-mysql_replication_master: '10.10.10.11'
-mysql_server_id: "2"

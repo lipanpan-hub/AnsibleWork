@@ -13,35 +13,33 @@
   hosts: host11
   become: true 
   vars_files: 
-    - vars/mysql_master.yml
+    - vars/mysql_replica.yml
   tasks:
-    - ansible.builtin.debug:
-        var: mysql_replication_role
     - ansible.builtin.include_role:
         name: lipanpan_hub.work.mysqlc
 
-- name: 第一个从节点点配置
+- name: 第一个从节点配置
   hosts: host12
   become: true 
   vars_files: 
-    - vars/mysql_slave.yml
-  vars:
-    mysql_server_id: "2"
+    - vars/mysql_replica.yml
   tasks:
-    - ansible.builtin.debug:
-        var: mysql_replication_role
     - ansible.builtin.include_role:
         name: lipanpan_hub.work.mysqlc
+      vars:
+        mysql_replication_role: 'slave'
+        mysql_server_id: "2"
+
 
 - name: 第二个从节点配置
   hosts: host13
   become: true 
   vars_files: 
-    - vars/mysql_slave.yml
-  vars:
-    mysql_server_id: "3"
+    - vars/mysql_replica.yml
   tasks:
-    - ansible.builtin.debug:
-        var: mysql_replication_role
     - ansible.builtin.include_role:
         name: lipanpan_hub.work.mysqlc
+      vars:
+        mysql_replication_role: 'slave'
+        mysql_server_id: "3"
+
