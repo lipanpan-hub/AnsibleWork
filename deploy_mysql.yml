@@ -1,13 +1,33 @@
-- name: 单机部署测试
+# - name: 单机部署测试
+#   hosts: host565
+#   become: true 
+#   vars_files: 
+#     - vars/mysql_conf.yml
+#   tasks:
+#     - ansible.builtin.import_role:
+#         name: lipanpan_hub.work.mysqlc
+
+
+
+- name: 主节点
   hosts: host565
   become: true 
-  environment: 
-    ANSIBLE_STDOUT_CALLBACK: debug
   vars_files: 
-    - vars/mysql_conf.yml
+    - vars/mysql_master.yml
   tasks:
-    - ansible.builtin.import_role:
+    - ansible.builtin.debug:
+        var: mysql_replication_role
+    - ansible.builtin.include_role:
         name: lipanpan_hub.work.mysqlc
 
-
+- name: 从节点
+  hosts: host566
+  become: true 
+  vars_files: 
+    - vars/mysql_slave.yml
+  tasks:
+    - ansible.builtin.debug:
+        var: mysql_replication_role
+    - ansible.builtin.include_role:
+        name: lipanpan_hub.work.mysqlc
 

@@ -10,7 +10,7 @@
 
 
 
-- name: 查看mysql是否成功安装 并且把结果 赋值 给变量 
+- name: 判断是否真正执行了安装操作(changed/ok) 并把结果注册到变量
   ansible.builtin.set_fact:
     mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed)
       or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed)

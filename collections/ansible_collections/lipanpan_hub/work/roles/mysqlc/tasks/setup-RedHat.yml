@@ -1,5 +1,5 @@
 ---
-- name: 确保 mysql 已经在 redhat安装好了 返回饿结果注册到变量
+- name: 确保 mysql 已经在 redhat安装好了 返回结果注册到变量
   ansible.builtin.yum:
     name: "{{ mysql_packages }}"
     state: present

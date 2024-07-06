@@ -1,0 +1,20 @@
+mysql_root_home: /root
+mysql_root_username: root
+mysql_root_password: root1234!
+
+
+mysql_port: "3306"
+mysql_bind_address: '0.0.0.0'
+
+
+
+
+# 主从复制相关配置
+mysql_replication_role: 'master'
+mysql_replication_user: 
+  name: replicator
+  password: test1234!
+
+mysql_replication_master: '192.168.56.5'
+mysql_server_id: "1"
+
